@@ -276,6 +276,16 @@ S3D.UI.leftMenu.open({
     content: "<p>HTML here</p>",// string — inner HTML of the panel body (a fragment, not a full <html> doc)
     width: 30,                  // number (0–100) — left sidebar width %, default 30
     id: "my_panel_id",          // optional — stable element ID (persists user resize)
+    allow_graphical_selections: true, //false by default
+    graphicsClickFunction: function() { // this will run whenever you click an element, you can then run  S3D.structure.getSelectedItems() and do something with that automatically
+        alert('click');
+    },
+    graphicsClickSelectFunction: function() {
+        alert('click select');
+    },
+    graphicsDragSelectFunction: function() {
+        alert('drag select');
+    },
     openFunction: function() {  // called after panel is injected & visible - bind events here (like onInit for Apps)
         // bind events, init widgets, etc.
     },
