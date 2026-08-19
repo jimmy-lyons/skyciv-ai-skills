@@ -335,11 +335,20 @@ Applied to plates.
 
 | Key | Description |
 |---|---|
-| `type` | `"one_way"`, `"two_way"`, `"column_wind_load"`, `"open_structure"`, `"non_rectangular"` |
-| `nodes` | Node IDs defining the area (3 or 4) |
-| `mag` | Load magnitude |
+| `type` | `"one_way"`, `"two_way"`, `"general_one_way"`, `"column_wind_load"`, `"open_structure"`, `"non_rectangular"` |
+| `nodes` | Node IDs defining the area (3 or 4). Array of integers, except for `general_one_way` which uses a comma-separated string. |
+| `mag` | Load magnitude. Not used for `general_one_way` — use `mags` instead. |
+| `mags` | Comma-separated magnitude(s). Required for `column_wind_load` (paired with `elevations`) and `general_one_way` (a single value for uniform, or `n` values paired with `n + 1` values in `intervals` for a stepped/tapered load) |
+| `column_direction` | Span direction as `"nodeA,nodeB"`. Relevant for `one_way`, `column_wind_load`, `general_one_way` |
+| `loaded_members_axis` | `"all"` or `"major"`. Relevant for `open_structure` and `general_one_way` |
+| `intervals` | `general_one_way` only — comma-separated step-interval distances, `n + 1` values matching `n` values in `mags`. Blank = uniform load |
+| `excluded_member_ids` | `general_one_way` only — comma-separated member IDs to exclude from carrying the load |
+| `exclude_internal_members` | `general_one_way` only — `"off"`, `"angled"`, or `"all"`: auto-excludes internal members not aligned to the span |
+| `cantilever_extensions` | `general_one_way` only — `"left,right"` offsets extending the load polygon along the span to pick up cantilevered members |
 | `direction` | `"X"`, `"Y"`, `"Z"`, or projected variants |
 | `LG` | Load group |
+
+> **Prefer `general_one_way`** over plain `one_way` — it's the most robust one-way option: non-rectangular spans, stepped/tapered magnitudes, and finer control over which members carry the load.
 
 ---
 
