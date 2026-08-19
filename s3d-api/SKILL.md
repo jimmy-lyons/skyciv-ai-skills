@@ -380,7 +380,7 @@ any combination's factor and is effectively invisible to it:
 }
 ```
 
-> See the [`load-combinations`](../load-combinations/SKILLS.md) skill for how this ties into
+> See the [`load-combinations`](../load-combinations/SKILL.md) skill for how this ties into
 > `load_combinations` factors — a combo with an `"SW1"` factor and no matching `load_group` on
 > `self_weight` will silently apply no self-weight at all.
 
@@ -404,7 +404,7 @@ any combination's factor and is effectively invisible to it:
 
 `criteria` is optional: `"strength"`, `"serviceability"`, or `"other"`. Load group names used as keys (e.g. `"Dead"`, `"SW1"`) — values are load factors.
 
-> **Building code-correct combinations?** See the [`load-combinations`](../load-combinations/SKILLS.md)
+> **Building code-correct combinations?** See the [`load-combinations`](../load-combinations/SKILL.md)
 > skill for how `load_combinations`, `load_cases`, and `load_combination_settings` fit together,
 > representative combination sets for the US / Europe / Canada / Australia / India, a full worked
 > AS/NZS 1170 example, and how to generate the complete enumerated set for any design code.

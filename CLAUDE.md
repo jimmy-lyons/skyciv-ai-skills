@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-This is a **documentation/prompt-engineering repository**, not a codebase with source files to build, lint, or test. It's a library of "skills" — structured Markdown files that teach an AI agent how to correctly call the [SkyCiv API](https://skyciv.com/api/) (structural engineering modeling, analysis, drawing, and reporting) instead of guessing at request shapes and units. There is no build system, package manifest, linter, or test suite — the only artifacts are `SKILLS.md` files and their supporting assets.
+This is a **documentation/prompt-engineering repository**, not a codebase with source files to build, lint, or test. It's a library of "skills" — structured Markdown files that teach an AI agent how to correctly call the [SkyCiv API](https://skyciv.com/api/) (structural engineering modeling, analysis, drawing, and reporting) instead of guessing at request shapes and units. There is no build system, package manifest, linter, or test suite — the only artifacts are `SKILL.md` files and their supporting assets.
 
 ## Repository structure
 
@@ -12,13 +12,13 @@ Each top-level folder is one self-contained skill:
 
 ```
 <skill-name>/
-  SKILLS.md       # required — skill instructions and API reference
+  SKILL.md       # required — skill instructions and API reference
   assets/         # optional — example inputs, catalogues, templates
 ```
 
-Current skills: `skyciv-api-v3`, `s3d-api`, `s3d-apps`, `cloudcad-api`, `load-gen-api`, `load-combinations`, `run-quick-design`, `baseplate`, `renderer`, `schema-agent`, `section-selector`, `qa-engineer`. There is also a `prototypes/` folder holding runnable example *apps* built on these skills (Node/Express), not `SKILLS.md` files — currently `prototypes/glass-balustrade-configurator` and `prototypes/truss-designer`. Note: a `reporting-engineer` skill is planned but the folder does not yet exist in this repo — don't assume it does.
+Current skills: `skyciv-api-v3`, `s3d-api`, `s3d-apps`, `cloudcad-api`, `load-gen-api`, `load-combinations`, `run-quick-design`, `baseplate`, `renderer`, `schema-agent`, `section-selector`, `qa-engineer`. There is also a `prototypes/` folder holding runnable example *apps* built on these skills (Node/Express), not `SKILL.md` files — currently `prototypes/glass-balustrade-configurator` and `prototypes/truss-designer`. Note: a `reporting-engineer` skill is planned but the folder does not yet exist in this repo — don't assume it does.
 
-Some `SKILLS.md` files have YAML frontmatter (`name`, `description`, `argument-hint`) so agent harnesses can discover them; others (e.g. `skyciv-api-v3`, `s3d-api`, `cloudcad-api`, `load-gen-api`, `run-quick-design`) are documentation-only and omit it. Match the style of the skill you're editing.
+Some `SKILL.md` files have YAML frontmatter (`name`, `description`, `argument-hint`) so agent harnesses can discover them; others (e.g. `skyciv-api-v3`, `s3d-api`, `cloudcad-api`, `load-gen-api`, `run-quick-design`) are documentation-only and omit it. Match the style of the skill you're editing.
 
 ## How the skills compose
 
@@ -40,7 +40,7 @@ renderer               → visualize the model and results
 qa-engineer            → independent review of the results
 ```
 
-`skyciv-api-v3` is the foundation every `*-api` skill depends on — it covers auth, session management (`S3D.session.start`), and the shared request/response envelope (`{ auth, options, functions }`) that every other API skill's calls are built on. Any skill that calls the SkyCiv API states this prerequisite at the top of its `SKILLS.md`.
+`skyciv-api-v3` is the foundation every `*-api` skill depends on — it covers auth, session management (`S3D.session.start`), and the shared request/response envelope (`{ auth, options, functions }`) that every other API skill's calls are built on. Any skill that calls the SkyCiv API states this prerequisite at the top of its `SKILL.md`.
 
 - `s3d-api` — full `s3d_model` JSON schema; `S3D.model`, `S3D.results`, `S3D.file`, `S3D.SB` namespaces.
 - `s3d-apps` — sits alongside this pipeline, not inside it: builds custom client-side mini-apps that run *embedded inside* the S3D application itself (`S3D.structure.*`, `S3D.graphics.*`, `S3D.API.S3D2API`), reusing the same `s3d_model` schema as `s3d-api` but with no auth/session calls (the app runs inside an already-open session).
@@ -67,10 +67,10 @@ When adding a new calculator, add all three files under a new `assets/<uid>/` fo
 
 ## Conventions when editing or adding a skill
 
-These are enforced project conventions (from `.github/copilot-instructions.md`) — follow them when authoring or modifying any `SKILLS.md`:
+These are enforced project conventions (from `.github/copilot-instructions.md`) — follow them when authoring or modifying any `SKILL.md`:
 
 - **Always update `README.md`** when adding a new skill folder — add a row to the skills table, keeping it sorted alphabetically by folder name.
-- **State the prerequisite first**: if a skill depends on `S3D.session.start` or another skill, call that out near the top of `SKILLS.md`.
+- **State the prerequisite first**: if a skill depends on `S3D.session.start` or another skill, call that out near the top of `SKILL.md`.
 - **Use tables for API parameters**, not prose lists.
 - **Include a minimal working example**: the smallest JSON payload that demonstrates the core use case.
 - **Cross-link related skills** (e.g. `s3d-api` → `skyciv-api-v3`).
