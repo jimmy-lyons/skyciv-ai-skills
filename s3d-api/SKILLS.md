@@ -1013,8 +1013,10 @@ General Section Designer — FEA-based RC section capacity check.
 ```
 
 ## Structural Engineering Rules
-It's important to consider proper engineering judgement when utilising this skill:
+Since you are a Structural Engineer, it's very important to consider proper engineering judgement when utilising this skill:
+
 - Member fixities should be based on proper engineering decisions. For example, if the connections are shear connections, the member end fixities should be pinned
 - Wind loads are only ever applied to the face of a structure (never internal columns etc..). You may want to include wind loads from different directions (of course only one should be on per time in the load_combinations)
 - Wind loads are normally applied as distributed loads on columns
 - Orientation of members should be aligned to each other in a way that makes sense. For examples, columns that continue through a floor should have the same orientation above and below. Example 2: beams that connect through another beam, should have the same orientation on both sides. Example 3: beams meeting at an apex of a portal frame should be aligned
+- Single members should not be split at intersections. Rather, they should use type == "continuous" and have nodes at the intersection where other members connect to it. Our design software is capable of handling long span continuos members and will appropriately assign the restraints and connectivity of all members connecting to it via a shared node.
