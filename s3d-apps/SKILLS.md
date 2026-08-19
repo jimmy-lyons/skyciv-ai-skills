@@ -175,7 +175,7 @@ For small, one-off edits you can also call these directly instead of going throu
 | `S3D.structure.supports` | `add({ node_id, fixity })` |
 | `S3D.structure.loads.point_loads` | `add(obj)` — `type: "n"` (node) or `"m"` (member, with `position` 0–100%) |
 | `S3D.structure.loads.distributed_loads` | `add(obj)` — `member`, `x_mag_A/B`, `y_mag_A/B`, `z_mag_A/B`, `position_A/B`, `load_group`, `axes` (`"global"`/`"local"`) |
-| `S3D.structure.loads.area_loads` | `add(obj)` — `type` (`one_way`, `two_way`, `column_wind_load`, `open_structure`), `nodes`, `mag`, `direction`, `LG` |
+| `S3D.structure.loads.area_loads` | `add(obj)` — `type` (`one_way`, `two_way`, `general_one_way`, `column_wind_load`, `open_structure`), `nodes`, `mag`, `direction`, `LG` — see `s3d-api` skill for `general_one_way`'s extra params (`mags`, `intervals`, `excluded_member_ids`, `exclude_internal_members`, `cantilever_extensions`) |
 | `S3D.structure.loads.sw` | `set({ loadcaseId: { x, y, z } })` — self-weight gravity multipliers per load case |
 | `S3D.structure.loads.lc` | `add({ name, ...loadGroupFactors })` — build a load combination from load groups |
 
@@ -276,6 +276,16 @@ S3D.UI.leftMenu.open({
     content: "<p>HTML here</p>",// string — inner HTML of the panel body (a fragment, not a full <html> doc)
     width: 30,                  // number (0–100) — left sidebar width %, default 30
     id: "my_panel_id",          // optional — stable element ID (persists user resize)
+    allow_graphical_selections: true, //false by default
+    graphicsClickFunction: function() { // this will run whenever you click an element, you can then run  S3D.structure.getSelectedItems() and do something with that automatically
+        alert('click');
+    },
+    graphicsClickSelectFunction: function() {
+        alert('click select');
+    },
+    graphicsDragSelectFunction: function() {
+        alert('drag select');
+    },
     openFunction: function() {  // called after panel is injected & visible - bind events here (like onInit for Apps)
         // bind events, init widgets, etc.
     },
